@@ -14,7 +14,7 @@
 name: Build OpenPnP OpenCV Distribution
 
 on:
-  push
+  [push]
 
 jobs:
   build_linux_arm:
