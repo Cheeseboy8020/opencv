@@ -112,7 +112,7 @@ jobs:
             mvn -B test
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@@v4
+        uses: actions/upload-artifact@v4
         with:
           name: ubuntu-18.04-arm
           path: |
@@ -132,7 +132,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@@v4
+        uses: actions/checkout@v4
 
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
@@ -218,7 +218,7 @@ jobs:
             mvn -B test
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@@v4
+        uses: actions/upload-artifact@v4
         with:
           name: ubuntu-18.04-arm64
           path: |
@@ -240,7 +240,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@@v4
+        uses: actions/checkout@v4
 
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
@@ -289,7 +289,7 @@ jobs:
         run: mvn -B test
 
       - name: Upload Libraries
-        uses: actions/upload-artifact@@v4
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os }}
           path: |
@@ -310,7 +310,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@@v4
+        uses: actions/checkout@v4
 
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v3
@@ -362,7 +362,7 @@ jobs:
         run: mvn -B test
 
       - name: Upload Libraries
-        uses: actions/upload-artifact@@v4
+        uses: actions/upload-artifact@v4
         with:
           name: macos-aarch64
           path: |
@@ -385,7 +385,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@@v4
+        uses: actions/checkout@v4
 
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
@@ -405,7 +405,7 @@ jobs:
         run: 7z x opencv-${{ env.OPENCV_VERSION }}.exe
 
       - name: Upload Libraries
-        uses: actions/upload-artifact@@v4
+        uses: actions/upload-artifact@v4
         with:
           name: windows-2016
           path: opencv/build/java
@@ -427,7 +427,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@@v4
+        uses: actions/checkout@v4
 
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
@@ -441,7 +441,7 @@ jobs:
           echo "OPENCV_VERSION_SHORT=$(mvn build-helper:parse-version org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=opencv.version.short -q -DforceStdout)" >> $GITHUB_ENV
 
       - name: Download Libraries
-        uses: actions/download-artifact@@v4
+        uses: actions/download-artifact@v4
 
       - name: Copy Binaries
         run: |
@@ -458,7 +458,7 @@ jobs:
         run: mvn -B install
 
       - name: Upload Distribution
-        uses: actions/upload-artifact@@v4
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: target/opencv*
@@ -496,7 +496,7 @@ jobs:
           echo "OPENCV_VERSION_SHORT=$(mvn build-helper:parse-version org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=opencv.version.short -q -DforceStdout)" >> $GITHUB_ENV
 
       - name: Download Distribution
-        uses: actions/download-artifact@@v4
+        uses: actions/download-artifact@v4
         with:
           name: dist
 
