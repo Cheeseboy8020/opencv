@@ -71,8 +71,11 @@ jobs:
 
             wget https://github.com/opencv/opencv/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
             unzip ${{ env.OPENCV_VERSION }} > /dev/null
-
+            
+            
             cd opencv-${{ env.OPENCV_VERSION }}
+            wget https://github.com/opencv/opencv_contrib/archive/contrib-${{ env.OPENCV_VERSION }}.zip > /dev/null
+            unzip contrib-${{ env.OPENCV_VERSION }} > /dev/null
             mkdir build
             cd build
             cmake \
@@ -91,6 +94,7 @@ jobs:
               -D BUILD_opencv_apps=OFF \
               -D BUILD_opencv_gapi=OFF \
               -D CMAKE_BUILD_TYPE=RELEASE \
+              -DOPENCV_EXTRA_MODULES_PATH=./contrib-${{ env.OPENCV_VERSION }}/modules ../${{ env.OPENCV_VERSION }}
               ..
             make -j4
 
