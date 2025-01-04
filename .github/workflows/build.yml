@@ -13,11 +13,12 @@
 
 name: Build OpenPnP OpenCV Distribution
 
-on: 
-  push
+on:
+  push:
+  pull_request:
 
 jobs:
-  build_linux_arm: 
+  build_linux_arm:
     strategy:
       matrix:
         os: [ubuntu-22.04]
@@ -45,8 +46,8 @@ jobs:
         with:
           arch: armv7
           distro: ubuntu18.04
-          
-           # Not required, but speeds up builds
+
+          # Not required, but speeds up builds
           githubToken: ${{ github.token }}
 
           # Create an artifacts directory
@@ -70,11 +71,8 @@ jobs:
 
             wget https://github.com/opencv/opencv/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
             unzip ${{ env.OPENCV_VERSION }} > /dev/null
-            
+
             cd opencv-${{ env.OPENCV_VERSION }}
-            
-            wget https://github.com/opencv/opencv_contrib/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
-            unzip ${{ env.OPENCV_VERSION }} > /dev/null
             mkdir build
             cd build
             cmake \
@@ -93,7 +91,6 @@ jobs:
               -D BUILD_opencv_apps=OFF \
               -D BUILD_opencv_gapi=OFF \
               -D CMAKE_BUILD_TYPE=RELEASE \
-              -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-${{env.OPENCV_VERSION}}/modules ../
               ..
             make -j4
 
@@ -117,8 +114,8 @@ jobs:
             mvn -B test
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with: 
+        uses: actions/upload-artifact@@v4
+        with:
           name: ubuntu-18.04-arm
           path: |
             artifacts/bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar
@@ -127,7 +124,7 @@ jobs:
 
 
 
-  build_linux_arm64: 
+  build_linux_arm64:
     strategy:
       matrix:
         os: [ubuntu-22.04]
@@ -137,7 +134,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@@v4
 
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
@@ -155,8 +152,8 @@ jobs:
         with:
           arch: aarch64
           distro: ubuntu18.04
-          
-           # Not required, but speeds up builds
+
+          # Not required, but speeds up builds
           githubToken: ${{ github.token }}
 
           # Create an artifacts directory
@@ -182,8 +179,6 @@ jobs:
             unzip ${{ env.OPENCV_VERSION }} > /dev/null
 
             cd opencv-${{ env.OPENCV_VERSION }}
-            wget https://github.com/opencv/opencv_contrib/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
-            unzip ${{ env.OPENCV_VERSION }} > /dev/null
             mkdir build
             cd build
             cmake \
@@ -202,7 +197,6 @@ jobs:
               -D BUILD_opencv_apps=OFF \
               -D BUILD_opencv_gapi=OFF \
               -D CMAKE_BUILD_TYPE=RELEASE \
-              -DOPENCV_EXTRA_MODULES_PATH=./contrib/opencv_contrib-${{env.OPENCV_VERSION}}/modules ../${{ env.OPENCV_VERSION }}
               ..
             make -j4
 
@@ -226,8 +220,8 @@ jobs:
             mvn -B test
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with: 
+        uses: actions/upload-artifact@@v4
+        with:
           name: ubuntu-18.04-arm64
           path: |
             artifacts/bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar
@@ -248,7 +242,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@@v4
 
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
@@ -266,8 +260,6 @@ jobs:
           wget https://github.com/opencv/opencv/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
           unzip ${{ env.OPENCV_VERSION }} > /dev/null
           cd opencv-${{ env.OPENCV_VERSION }}
-          wget https://github.com/opencv/opencv_contrib/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
-          unzip ${{ env.OPENCV_VERSION }} > /dev/null
           mkdir build
           cd build
           cmake \
@@ -299,8 +291,8 @@ jobs:
         run: mvn -B test
 
       - name: Upload Libraries
-        uses: actions/upload-artifact@v4
-        with: 
+        uses: actions/upload-artifact@@v4
+        with:
           name: ${{ matrix.os }}
           path: |
             opencv-${{ env.OPENCV_VERSION }}/build/bin/opencv-${{ env.OPENCV_VERSION_SHORT }}.jar
@@ -320,7 +312,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@@v4
 
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v3
@@ -340,8 +332,6 @@ jobs:
           wget https://github.com/opencv/opencv/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
           unzip ${{ env.OPENCV_VERSION }} > /dev/null
           cd opencv-${{ env.OPENCV_VERSION }}
-          wget https://github.com/opencv/opencv_contrib/archive/${{ env.OPENCV_VERSION }}.zip > /dev/null
-          unzip ${{ env.OPENCV_VERSION }} > /dev/null
           mkdir build
           cd build
           cmake \
@@ -374,7 +364,7 @@ jobs:
         run: mvn -B test
 
       - name: Upload Libraries
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@@v4
         with:
           name: macos-aarch64
           path: |
@@ -397,7 +387,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@@v4
 
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
@@ -415,10 +405,10 @@ jobs:
 
       - name: Extract Windows Distribution
         run: 7z x opencv-${{ env.OPENCV_VERSION }}.exe
-          
+
       - name: Upload Libraries
-        uses: actions/upload-artifact@v4
-        with: 
+        uses: actions/upload-artifact@@v4
+        with:
           name: windows-2016
           path: opencv/build/java
 
@@ -439,7 +429,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@@v4
 
       - name: Setup JDK ${{ matrix.java }}
         uses: actions/setup-java@v1
@@ -453,7 +443,7 @@ jobs:
           echo "OPENCV_VERSION_SHORT=$(mvn build-helper:parse-version org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=opencv.version.short -q -DforceStdout)" >> $GITHUB_ENV
 
       - name: Download Libraries
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@@v4
 
       - name: Copy Binaries
         run: |
@@ -470,8 +460,8 @@ jobs:
         run: mvn -B install
 
       - name: Upload Distribution
-        uses: actions/upload-artifact@v4
-        with: 
+        uses: actions/upload-artifact@@v4
+        with:
           name: dist
           path: target/opencv*
 
@@ -508,7 +498,7 @@ jobs:
           echo "OPENCV_VERSION_SHORT=$(mvn build-helper:parse-version org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=opencv.version.short -q -DforceStdout)" >> $GITHUB_ENV
 
       - name: Download Distribution
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@@v4
         with:
           name: dist
 
@@ -521,7 +511,7 @@ jobs:
 
   publish:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    
+
     needs: test
 
     strategy:
